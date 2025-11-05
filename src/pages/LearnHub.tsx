@@ -242,6 +242,32 @@ const LearnHub = () => {
     }
   };
 
+  const handleGetAssets = (tutorialId: string) => {
+    // Find the tutorial to get its asset link
+    const tutorial = tutorials.find((t: any) => t.id === tutorialId);
+    if (!tutorial || !tutorial.assetLink) {
+      sonnerToast("No assets available", {
+        description: "This tutorial doesn't have any required assets",
+        duration: 2000,
+      });
+      return;
+    }
+
+    // Redirect to the asset link
+    window.open(tutorial.assetLink, '_blank');
+
+    // Close the popup
+    setShowAssetsPopup(null);
+
+    // Start the tutorial after opening assets
+    setActiveTutorialId(tutorialId);
+  };
+
+  const handleStartWithoutAssets = (tutorialId: string) => {
+    setShowAssetsPopup(null);
+    setActiveTutorialId(tutorialId);
+  };
+
   const handleMarkComplete = () => {
     if (!user || !activeTutorial) return;
     const id = activeTutorial.id;
