@@ -807,10 +807,47 @@ export default function AdminTutorials() {
               </div>
               <div className="space-y-2">
                 <Label>Author</Label>
-                <Input 
-                  value={selectedTutorial.author || ''} 
+                <Input
+                  value={selectedTutorial.author || ''}
                   onChange={(e) => setSelectedTutorial({ ...selectedTutorial, author: e.target.value })}
                 />
+              </div>
+              <div className="space-y-2">
+                <Label>Asset Link</Label>
+                <Input
+                  value={selectedTutorial.assetLink || ''}
+                  onChange={(e) => setSelectedTutorial({ ...selectedTutorial, assetLink: e.target.value })}
+                  placeholder="https://example.com/assets/tutorial-assets.zip"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Link to download required assets for this tutorial
+                </p>
+              </div>
+              <div className="space-y-2">
+                <Label>Video URL</Label>
+                <div className="flex gap-2">
+                  <Input
+                    value={selectedTutorial.videoUrl || ''}
+                    onChange={(e) => setSelectedTutorial({ ...selectedTutorial, videoUrl: e.target.value })}
+                    placeholder="https://youtube.com/watch?v=..."
+                    className="flex-1"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      if (selectedTutorial.videoUrl) {
+                        window.open(selectedTutorial.videoUrl, '_blank');
+                      }
+                    }}
+                    className="px-3"
+                  >
+                    Open
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  YouTube video URL for the tutorial content
+                </p>
               </div>
               {/* File Upload Sections for Edit */}
               <div className="space-y-4">
