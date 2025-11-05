@@ -254,6 +254,53 @@ export default function AdminTutorials() {
 
   const handleAddTutorial = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate that required fields are filled
+    if (!newTutorial.title.trim()) {
+      toast({
+        title: "Validation Error",
+        description: "Title is required",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!newTutorial.description.trim()) {
+      toast({
+        title: "Validation Error",
+        description: "Description is required",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!newTutorial.author.trim()) {
+      toast({
+        title: "Validation Error",
+        description: "Author is required",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!thumbnailFile) {
+      toast({
+        title: "Validation Error",
+        description: "Thumbnail image is required",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!contentFile) {
+      toast({
+        title: "Validation Error",
+        description: "Content file is required",
+        variant: "destructive",
+      });
+      return;
+    }
+
     addTutorialMutation.mutate(newTutorial);
   };
 
