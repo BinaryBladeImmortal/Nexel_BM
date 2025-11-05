@@ -374,6 +374,122 @@ export default function AdminAssets() {
     return true;
   };
 
+  // File upload component
+  const FileUploadComponent = ({
+    file,
+    setFile,
+    label,
+    accept,
+    maxSize,
+    onFileSelect
+  }: {
+    file: File | null;
+    setFile: (file: File | null) => void;
+    label: string;
+    accept: string;
+    maxSize: string;
+    onFileSelect?: (file: File) => boolean;
+  }) => {
+    const [isDragging, setIsDragging] = useState(false);
+
+    const handleDragOver = (e: React.DragEvent) => {
+      e.preventDefault();
+      setIsDragging(true);
+    };
+
+    const handleDragLeave = (e: React.DragEvent) => {
+      e.preventDefault();
+      setIsDragging(false);
+    };
+
+    const handleDrop = (e: React.DragEvent) => {
+      e.preventDefault();
+      setIsDragging(false);
+
+      const droppedFiles = Array.from(e.dataTransfer.files);
+      if (droppedFiles.length > 0) {
+        const selectedFile = droppedFiles[0];
+        if (onFileSelect ? onFileSelect(selectedFile) : true) {
+          setFile(selectedFile);
+        }
+      }
+    };
+
+    const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const selectedFile = e.target.files?.[0];
+      if (selectedFile && (onFileSelect ? onFileSelect(selectedFile) : true)) {
+        setFile(selectedFile);
+      }
+    };
+
+    const removeFile = () => {
+      setFile(null);
+    };
+
+    return (
+      <div className="space-y-2">
+        <Label>{label}</Label>
+        {file ? (
+          <div className="relative border rounded-lg p-4 bg-primary/5">
+            <div className="flex items-center gap-3">
+              <File className="h-8 w-8 text-primary" />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium truncate">{file.name}</p>
+                <p className="text-xs text-muted-foreground">
+                  {(file.size / 1024 / 1024).toFixed(2)} MB
+                </p>
+              </div>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={removeFile}
+                className="text-red-500 hover:text-red-600"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+            {isUploading && (
+              <div className="mt-3">
+                <Progress value={uploadProgress} className="h-2" />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Uploading... {uploadProgress}%
+                </p>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div
+            className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer
+              ${isDragging
+                ? 'border-primary bg-primary/10'
+                : 'border-primary/30 hover:border-primary hover:bg-primary/5'
+              }`}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            onClick={() => document.getElementById(`file-input-${label}`)?.click()}
+          >
+            <input
+              id={`file-input-${label}`}
+              type="file"
+              accept={accept}
+              onChange={handleFileSelect}
+              className="hidden"
+            />
+            <Upload className="h-8 w-8 text-primary mx-auto mb-2" />
+            <p className="text-sm text-muted-foreground mb-1">
+              Drag and drop your {label.toLowerCase()} here, or click to browse
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Max size: {maxSize}
+            </p>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="p-8">
       {/* Header */}
