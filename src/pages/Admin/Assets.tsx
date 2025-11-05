@@ -341,12 +341,20 @@ export default function AdminAssets() {
     switch (category?.toLowerCase()) {
       case 'model':
         return <Box className="h-5 w-5" />;
+      case 'animation':
+        return <Film className="h-5 w-5" />;
       case 'texture':
         return <ImageIcon className="h-5 w-5" />;
       case 'script':
         return <Code className="h-5 w-5" />;
       case 'audio':
         return <Music className="h-5 w-5" />;
+      case 'video':
+        return <Video className="h-5 w-5" />;
+      case 'vfx':
+        return <Sparkles className="h-5 w-5" />;
+      case 'font':
+        return <Type className="h-5 w-5" />;
       default:
         return <FileText className="h-5 w-5" />;
     }
