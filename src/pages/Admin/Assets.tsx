@@ -2,20 +2,23 @@ import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import GlitchText from '@/components/GlitchText';
-import { 
-  Package, 
-  Search, 
-  Edit, 
-  Trash2, 
-  Plus, 
-  Loader2, 
-  Star, 
+import {
+  Package,
+  Search,
+  Edit,
+  Trash2,
+  Plus,
+  Loader2,
+  Star,
   Image as ImageIcon,
   Code,
   Music,
   FileText,
   Box,
-  Tag
+  Tag,
+  Upload,
+  X,
+  File
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -25,6 +28,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/hooks/use-toast';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
+import { Progress } from '@/components/ui/progress';
 
 export default function AdminAssets() {
   const navigate = useNavigate();
