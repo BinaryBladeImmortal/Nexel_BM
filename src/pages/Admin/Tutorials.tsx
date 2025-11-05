@@ -239,6 +239,13 @@ export default function AdminTutorials() {
     setEditThumbnailFile(null);
     setEditContentFile(null);
     setIsEditDialogOpen(true);
+    // Reset file state when opening edit dialog
+    if (tutorial.thumbnailUrl) {
+      setEditThumbnailFile(null);
+    }
+    if (tutorial.contentUrl) {
+      setEditContentFile(null);
+    }
   };
 
   const handleUpdateTutorial = (e: React.FormEvent) => {
