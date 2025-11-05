@@ -36,6 +36,17 @@ export default function AdminTutorials() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isStatsDialogOpen, setIsStatsDialogOpen] = useState(false);
+
+  // File upload state
+  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+  const [contentFile, setContentFile] = useState<File | null>(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
+
+  // Edit dialog file state
+  const [editThumbnailFile, setEditThumbnailFile] = useState<File | null>(null);
+  const [editContentFile, setEditContentFile] = useState<File | null>(null);
+
   const [newTutorial, setNewTutorial] = useState({
     title: '',
     description: '',
