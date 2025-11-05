@@ -7,14 +7,16 @@ import { CreditCard, Lock, Loader2, CheckCircle, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 import { useAuth } from '@/contexts/AuthContext';
 
+interface Plan {
+  name: string;
+  price: number;
+  duration: string;
+}
+
 interface CheckoutModalProps {
   isOpen: boolean;
   onClose: () => void;
-  plan: {
-    name: string;
-    price: number;
-    duration: string;
-  };
+  plan: Plan;
 }
 
 export const CheckoutModal = ({ isOpen, onClose, plan }: CheckoutModalProps) => {
