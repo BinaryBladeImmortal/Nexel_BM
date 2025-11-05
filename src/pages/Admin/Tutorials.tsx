@@ -121,7 +121,8 @@ export default function AdminTutorials() {
       formData.append('xpReward', tutorial.xpReward.toString());
       formData.append('published', tutorial.published.toString());
       formData.append('author', tutorial.author);
-      formData.append('content', tutorial.content);
+      formData.append('assetLink', tutorial.assetLink || '');
+      formData.append('videoUrl', tutorial.videoUrl || '');
       formData.append('estimatedTime', tutorial.estimatedTime.toString());
 
       // Add files if they exist
