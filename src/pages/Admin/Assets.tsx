@@ -199,7 +199,6 @@ export default function AdminAssets() {
       formData.append('description', assetData.description);
       formData.append('category', assetData.category);
       formData.append('price', assetData.price.toString());
-      formData.append('xpValue', assetData.xpValue.toString());
       formData.append('isFeatured', assetData.isFeatured.toString());
       formData.append('isPremium', assetData.isPremium.toString());
       formData.append('requiredSubscription', 'Starter'); // Default subscription level
