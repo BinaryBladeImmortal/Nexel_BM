@@ -140,15 +140,36 @@ export default function AdminTutorials() {
 
   // Add tutorial mutation
   const addTutorialMutation = useMutation({
-    mutationFn: async (tutorial: any) => {
+    mutationFn: async (tutorialData: any) => {
       const token = localStorage.getItem('token');
+      const formData = new FormData();
+
+      // Add form fields
+      formData.append('title', tutorialData.title);
+      formData.append('description', tutorialData.description);
+      formData.append('category', tutorialData.category);
+      formData.append('difficulty', tutorialData.difficulty);
+      formData.append('xpReward', tutorialData.xpReward.toString());
+      formData.append('published', tutorialData.published.toString());
+      formData.append('author', tutorialData.author);
+      formData.append('content', tutorialData.content);
+      formData.append('estimatedTime', tutorialData.estimatedTime.toString());
+
+      // Add files if they exist
+      if (thumbnailFile) {
+        formData.append('thumbnail', thumbnailFile);
+      }
+      if (contentFile) {
+        formData.append('contentFile', contentFile);
+      }
+
       const res = await fetch('http://localhost:5000/api/v1/tutorials', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+          'Authorization': `Bearer ${token}`
+          // Don't set Content-Type for FormData - browser sets it automatically with boundary
         },
-        body: JSON.stringify(tutorial)
+        body: formData
       });
       if (!res.ok) throw new Error('Failed to add tutorial');
       return res.json();
@@ -156,6 +177,7 @@ export default function AdminTutorials() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-tutorials'] });
       setIsAddDialogOpen(false);
+      // Reset form
       setNewTutorial({
         title: '',
         description: '',
@@ -168,6 +190,8 @@ export default function AdminTutorials() {
         imageUrl: '',
         estimatedTime: 30,
       });
+      setThumbnailFile(null);
+      setContentFile(null);
       toast({
         title: "Tutorial added",
         description: "The new tutorial has been successfully added",
