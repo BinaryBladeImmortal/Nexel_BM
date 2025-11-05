@@ -279,6 +279,44 @@ export default function AdminAssets() {
 
   const handleAddAsset = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate that required fields are filled
+    if (!newAsset.title.trim()) {
+      toast({
+        title: "Validation Error",
+        description: "Title is required",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!newAsset.description.trim()) {
+      toast({
+        title: "Validation Error",
+        description: "Description is required",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!assetFile) {
+      toast({
+        title: "Validation Error",
+        description: "Asset file is required",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!thumbnailFile) {
+      toast({
+        title: "Validation Error",
+        description: "Thumbnail image is required",
+        variant: "destructive",
+      });
+      return;
+    }
+
     addAssetMutation.mutate(newAsset);
   };
 
