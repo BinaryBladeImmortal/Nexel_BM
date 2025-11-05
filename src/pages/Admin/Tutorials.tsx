@@ -236,6 +236,8 @@ export default function AdminTutorials() {
 
   const handleEditTutorial = (tutorial: any) => {
     setSelectedTutorial(tutorial);
+    setEditThumbnailFile(null);
+    setEditContentFile(null);
     setIsEditDialogOpen(true);
   };
 
