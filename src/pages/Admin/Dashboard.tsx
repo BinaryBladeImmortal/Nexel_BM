@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Users, Package, BookOpen, Trophy, TrendingUp } from 'lucide-react';
+import { Users, Package, BookOpen, Trophy, TrendingUp, Loader2, AlertCircle } from 'lucide-react';
 import GlitchText from '@/components/GlitchText';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
