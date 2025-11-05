@@ -862,22 +862,11 @@ export default function AdminAssets() {
                 </select>
               </div>
               <div className="space-y-2">
-                <Label>Price ($)</Label>
-                <Input 
-                  type="number" 
-                  value={newAsset.price} 
-                  onChange={(e) => setNewAsset({ ...newAsset, price: Number(e.target.value) })}
-                  min={0}
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>XP Value</Label>
+                <Label>Price (₹)</Label>
                 <Input
                   type="number"
-                  value={newAsset.xpValue}
-                  onChange={(e) => setNewAsset({ ...newAsset, xpValue: Number(e.target.value) })}
+                  value={newAsset.price}
+                  onChange={(e) => setNewAsset({ ...newAsset, price: Number(e.target.value) })}
                   min={0}
                 />
               </div>
