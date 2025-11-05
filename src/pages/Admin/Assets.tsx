@@ -667,15 +667,12 @@ export default function AdminAssets() {
                           Premium
                         </Badge>
                       ) : asset.price > 0 ? (
-                        <span className="text-sm">${asset.price}</span>
+                        <span className="text-sm">₹{asset.price.toLocaleString('en-IN')}</span>
                       ) : (
                         <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/30">
                           Free
                         </Badge>
                       )}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-muted-foreground">
-                      {asset.xpValue || 0} XP
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
