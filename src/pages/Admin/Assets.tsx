@@ -263,6 +263,8 @@ export default function AdminAssets() {
 
   const handleEditAsset = (asset: any) => {
     setSelectedAsset(asset);
+    setEditAssetFile(null);
+    setEditThumbnailFile(null);
     setIsEditDialogOpen(true);
   };
 
