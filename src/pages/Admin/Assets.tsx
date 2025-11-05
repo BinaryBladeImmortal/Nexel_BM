@@ -594,34 +594,62 @@ export default function AdminAssets() {
             className="pl-10"
           />
         </div>
-        <div className="flex gap-2">
-          <Button 
-            variant={searchQuery === '' ? "default" : "outline"} 
+        <div className="flex gap-2 flex-wrap">
+          <Button
+            variant={searchQuery === '' ? "default" : "outline"}
             onClick={() => setSearchQuery('')}
             size="sm"
           >
             All
           </Button>
-          <Button 
-            variant={searchQuery === 'model' ? "default" : "outline"} 
+          <Button
+            variant={searchQuery === 'model' ? "default" : "outline"}
             onClick={() => setSearchQuery('model')}
             size="sm"
           >
             3D Models
           </Button>
-          <Button 
-            variant={searchQuery === 'texture' ? "default" : "outline"} 
+          <Button
+            variant={searchQuery === 'animation' ? "default" : "outline"}
+            onClick={() => setSearchQuery('animation')}
+            size="sm"
+          >
+            Animations
+          </Button>
+          <Button
+            variant={searchQuery === 'texture' ? "default" : "outline"}
             onClick={() => setSearchQuery('texture')}
             size="sm"
           >
             Textures
           </Button>
-          <Button 
-            variant={searchQuery === 'script' ? "default" : "outline"} 
+          <Button
+            variant={searchQuery === 'script' ? "default" : "outline"}
             onClick={() => setSearchQuery('script')}
             size="sm"
           >
             Scripts
+          </Button>
+          <Button
+            variant={searchQuery === 'audio' ? "default" : "outline"}
+            onClick={() => setSearchQuery('audio')}
+            size="sm"
+          >
+            Audio
+          </Button>
+          <Button
+            variant={searchQuery === 'video' ? "default" : "outline"}
+            onClick={() => setSearchQuery('video')}
+            size="sm"
+          >
+            Video
+          </Button>
+          <Button
+            variant={searchQuery === 'vfx' ? "default" : "outline"}
+            onClick={() => setSearchQuery('vfx')}
+            size="sm"
+          >
+            VFX
           </Button>
         </div>
       </div>
