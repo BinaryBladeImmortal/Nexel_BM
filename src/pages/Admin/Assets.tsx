@@ -139,15 +139,34 @@ export default function AdminAssets() {
 
   // Update asset mutation
   const updateAssetMutation = useMutation({
-    mutationFn: async (asset: any) => {
+    mutationFn: async ({ asset, files }: { asset: any, files?: { assetFile?: File, thumbnailFile?: File } }) => {
       const token = localStorage.getItem('token');
+      const formData = new FormData();
+
+      // Add form fields
+      formData.append('name', asset.title);
+      formData.append('description', asset.description);
+      formData.append('category', asset.category);
+      formData.append('price', asset.price.toString());
+      formData.append('xpValue', asset.xpValue.toString());
+      formData.append('isFeatured', asset.isFeatured.toString());
+      formData.append('isPremium', asset.isPremium.toString());
+      formData.append('requiredSubscription', 'Starter'); // Default subscription level
+
+      // Add files if they exist
+      if (files?.assetFile) {
+        formData.append('file', files.assetFile);
+      }
+      if (files?.thumbnailFile) {
+        formData.append('thumbnail', files.thumbnailFile);
+      }
+
       const res = await fetch(`http://localhost:5000/api/v1/assets/${asset.id}`, {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+          'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(asset)
+        body: formData
       });
       if (!res.ok) throw new Error('Failed to update asset');
       return res.json();
@@ -155,6 +174,8 @@ export default function AdminAssets() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-assets'] });
       setIsEditDialogOpen(false);
+      setEditAssetFile(null);
+      setEditThumbnailFile(null);
       toast({
         title: "Asset updated",
         description: "The asset has been successfully updated",
