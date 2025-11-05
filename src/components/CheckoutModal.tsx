@@ -134,7 +134,7 @@ export const CheckoutModal = ({ isOpen, onClose, plan }: CheckoutModalProps) => 
       updateUser({
         ...user!,
         subscription: {
-          plan: plan.name as any,
+          plan: plan.name,
           startDate: startDate.toISOString(),
           endDate: endDate.toISOString()
         }
