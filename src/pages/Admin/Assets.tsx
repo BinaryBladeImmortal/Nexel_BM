@@ -840,21 +840,34 @@ export default function AdminAssets() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>XP Value</Label>
-                <Input 
-                  type="number" 
-                  value={newAsset.xpValue} 
+                <Input
+                  type="number"
+                  value={newAsset.xpValue}
                   onChange={(e) => setNewAsset({ ...newAsset, xpValue: Number(e.target.value) })}
                   min={0}
                 />
               </div>
-              <div className="space-y-2">
-                <Label>Image URL</Label>
-                <Input 
-                  value={newAsset.imageUrl} 
-                  onChange={(e) => setNewAsset({ ...newAsset, imageUrl: e.target.value })}
-                  placeholder="https://example.com/image.jpg"
-                />
-              </div>
+            </div>
+
+            {/* File Upload Sections */}
+            <div className="space-y-4">
+              <FileUploadComponent
+                file={assetFile}
+                setFile={setAssetFile}
+                label="Asset File"
+                accept="*/*"
+                maxSize="5MB"
+                onFileSelect={(file) => validateAssetFile(file, newAsset.category)}
+              />
+
+              <FileUploadComponent
+                file={thumbnailFile}
+                setFile={setThumbnailFile}
+                label="Thumbnail Image"
+                accept="image/*"
+                maxSize="2MB"
+                onFileSelect={validateThumbnailFile}
+              />
             </div>
             <div className="flex items-center justify-between pt-4 space-x-4">
               <div className="flex items-center space-x-2">
