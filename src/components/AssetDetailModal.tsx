@@ -48,11 +48,13 @@ interface AssetDetailModalProps {
 export function AssetDetailModal({ asset, isOpen, onClose }: AssetDetailModalProps) {
   if (!asset) return null;
 
-  // Add error handling to prevent crashes
+  // Hooks must be called at the top level, never inside conditions or try blocks
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [tiltDeg, setTiltDeg] = useState(0);
+
+  // Add error handling for the component logic
   try {
-    const audioRef = useRef<HTMLAudioElement | null>(null);
-    const [isAudioPlaying, setIsAudioPlaying] = useState(false);
-    const [tiltDeg, setTiltDeg] = useState(0);
 
     const fileTypeLower = (asset.fileType || "").toLowerCase();
     const categoryLower = (asset.category || "").toLowerCase();
