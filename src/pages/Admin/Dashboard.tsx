@@ -142,7 +142,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Subscription Breakdown */}
-      {stats?.stats?.subscriptionBreakdown && stats.stats.subscriptionBreakdown.length > 0 && (
+      {!isLoading && stats?.stats?.subscriptionBreakdown && stats.stats.subscriptionBreakdown.length > 0 && (
         <div className="gradient-border p-6 mb-8">
           <h2 className="text-2xl font-orbitron font-bold mb-6">Subscription Breakdown</h2>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
@@ -153,6 +153,14 @@ export default function AdminDashboard() {
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {/* No Subscription Data */}
+      {!isLoading && (!stats?.stats?.subscriptionBreakdown || stats.stats.subscriptionBreakdown.length === 0) && (
+        <div className="gradient-border p-6 mb-8">
+          <h2 className="text-2xl font-orbitron font-bold mb-6">Subscription Breakdown</h2>
+          <p className="text-muted-foreground text-center">No subscription data available yet.</p>
         </div>
       )}
 
