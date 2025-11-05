@@ -312,6 +312,68 @@ export default function AdminAssets() {
     }
   };
 
+  // File validation helper functions
+  const validateAssetFile = (file: File, category: string): boolean => {
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSize) {
+      toast({
+        title: "File too large",
+        description: "Maximum file size is 5MB",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    const categoryLower = category.toLowerCase();
+    const allowedTypes: { [key: string]: string[] } = {
+      model: ['.fbx', '.obj', '.gltf', '.glb', '.blend', '.max', '.ma'],
+      texture: ['.png', '.jpg', '.jpeg', '.tga', '.tiff', '.bmp', '.webp'],
+      script: ['.js', '.ts', '.py', '.lua', '.cs'],
+      audio: ['.mp3', '.wav', '.ogg', '.m4a', '.flac'],
+      other: [] // Allow all files for 'other' category
+    };
+
+    if (categoryLower !== 'other') {
+      const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
+      const validExtensions = allowedTypes[categoryLower] || [];
+
+      if (validExtensions.length > 0 && !validExtensions.includes(fileExtension)) {
+        toast({
+          title: "Invalid file type",
+          description: `Allowed file types for ${category}: ${validExtensions.join(', ')}`,
+          variant: "destructive",
+        });
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const validateThumbnailFile = (file: File): boolean => {
+    const maxSize = 2 * 1024 * 1024; // 2MB
+    if (file.size > maxSize) {
+      toast({
+        title: "Thumbnail too large",
+        description: "Maximum thumbnail size is 2MB",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      toast({
+        title: "Invalid thumbnail format",
+        description: "Allowed formats: JPEG, PNG, WebP",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    return true;
+  };
+
   return (
     <div className="p-8">
       {/* Header */}
