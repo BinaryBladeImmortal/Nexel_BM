@@ -350,11 +350,11 @@ export default function AdminAssets() {
 
   // File validation helper functions
   const validateAssetFile = (file: File, category: string): boolean => {
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    const maxSize = 10 * 1024 * 1024; // 10MB for larger files like models
     if (file.size > maxSize) {
       toast({
         title: "File too large",
-        description: "Maximum file size is 5MB",
+        description: "Maximum file size is 10MB",
         variant: "destructive",
       });
       return false;
@@ -362,14 +362,40 @@ export default function AdminAssets() {
 
     const categoryLower = category.toLowerCase();
     const allowedTypes: { [key: string]: string[] } = {
-      model: ['.fbx', '.obj', '.gltf', '.glb', '.blend', '.max', '.ma'],
-      texture: ['.png', '.jpg', '.jpeg', '.tga', '.tiff', '.bmp', '.webp'],
-      script: ['.js', '.ts', '.py', '.lua', '.cs'],
-      audio: ['.mp3', '.wav', '.ogg', '.m4a', '.flac'],
-      other: [] // Allow all files for 'other' category
+      // 3D Models - including various formats and animation files
+      model: ['.obj', '.fbx', '.glb', '.gltf', '.blend', '.max', '.ma', '.dae', '.abc'],
+      // Textures - image formats for materials and surfaces
+      texture: ['.png', '.jpg', '.jpeg', '.webp', '.tga', '.tiff', '.bmp', '.hdr', '.exr'],
+      // Scripts - programming and scripting files
+      script: ['.js', '.ts', '.py', '.lua', '.cs', '.cpp', '.hpp', '.h', '.java', '.rb'],
+      // Audio - sound files and music
+      audio: ['.mp3', '.wav', '.ogg', '.m4a', '.flac', '.aac', '.wma'],
+      // Video - video files and VFX
+      video: ['.mp4', '.avi', '.mov', '.mkv', '.webm', '.flv', '.wmv'],
+      // VFX - visual effects and shaders
+      vfx: ['.glsl', '.hlsl', '.cg', '.fx', '.vfx', '.particle'],
+      // Animations - animation-specific files
+      animation: ['.fbx', '.gltf', '.glb', '.bvh', '.anim', '.ani'],
+      // Fonts - text fonts
+      font: ['.ttf', '.otf', '.woff', '.woff2', '.eot'],
+      // Other - allow all files for miscellaneous assets
+      other: []
     };
 
-    if (categoryLower !== 'other') {
+    // Special handling for animation files which should be treated as models
+    if (categoryLower === 'model' || categoryLower === 'animation') {
+      const modelExtensions = [...allowedTypes.model, ...allowedTypes.animation];
+      const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
+
+      if (!modelExtensions.includes(fileExtension)) {
+        toast({
+          title: "Invalid file type",
+          description: `Allowed file types for 3D Models/Animations: ${modelExtensions.join(', ')}`,
+          variant: "destructive",
+        });
+        return false;
+      }
+    } else if (categoryLower !== 'other') {
       const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
       const validExtensions = allowedTypes[categoryLower] || [];
 
