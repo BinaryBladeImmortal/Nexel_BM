@@ -108,15 +108,35 @@ export default function AdminTutorials() {
 
   // Update tutorial mutation
   const updateTutorialMutation = useMutation({
-    mutationFn: async (tutorial: any) => {
+    mutationFn: async ({ tutorial, files }: { tutorial: any, files?: { thumbnailFile?: File, contentFile?: File } }) => {
       const token = localStorage.getItem('token');
+      const formData = new FormData();
+
+      // Add form fields
+      formData.append('title', tutorial.title);
+      formData.append('description', tutorial.description);
+      formData.append('category', tutorial.category);
+      formData.append('difficulty', tutorial.difficulty);
+      formData.append('xpReward', tutorial.xpReward.toString());
+      formData.append('published', tutorial.published.toString());
+      formData.append('author', tutorial.author);
+      formData.append('content', tutorial.content);
+      formData.append('estimatedTime', tutorial.estimatedTime.toString());
+
+      // Add files if they exist
+      if (files?.thumbnailFile) {
+        formData.append('thumbnail', files.thumbnailFile);
+      }
+      if (files?.contentFile) {
+        formData.append('contentFile', files.contentFile);
+      }
+
       const res = await fetch(`http://localhost:5000/api/v1/tutorials/${tutorial.id}`, {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+          'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(tutorial)
+        body: formData
       });
       if (!res.ok) throw new Error('Failed to update tutorial');
       return res.json();
@@ -124,6 +144,8 @@ export default function AdminTutorials() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-tutorials'] });
       setIsEditDialogOpen(false);
+      setEditThumbnailFile(null);
+      setEditContentFile(null);
       toast({
         title: "Tutorial updated",
         description: "The tutorial has been successfully updated",
