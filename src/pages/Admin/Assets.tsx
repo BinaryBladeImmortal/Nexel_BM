@@ -171,15 +171,35 @@ export default function AdminAssets() {
 
   // Add asset mutation
   const addAssetMutation = useMutation({
-    mutationFn: async (asset: any) => {
+    mutationFn: async (assetData: any) => {
       const token = localStorage.getItem('token');
+      const formData = new FormData();
+
+      // Add form fields
+      formData.append('name', assetData.title);
+      formData.append('description', assetData.description);
+      formData.append('category', assetData.category);
+      formData.append('price', assetData.price.toString());
+      formData.append('xpValue', assetData.xpValue.toString());
+      formData.append('isFeatured', assetData.isFeatured.toString());
+      formData.append('isPremium', assetData.isPremium.toString());
+      formData.append('requiredSubscription', 'Starter'); // Default subscription level
+
+      // Add files if they exist
+      if (assetFile) {
+        formData.append('file', assetFile);
+      }
+      if (thumbnailFile) {
+        formData.append('thumbnail', thumbnailFile);
+      }
+
       const res = await fetch('http://localhost:5000/api/v1/assets', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+          'Authorization': `Bearer ${token}`
+          // Don't set Content-Type for FormData - browser sets it automatically with boundary
         },
-        body: JSON.stringify(asset)
+        body: formData
       });
       if (!res.ok) throw new Error('Failed to add asset');
       return res.json();
@@ -187,6 +207,7 @@ export default function AdminAssets() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-assets'] });
       setIsAddDialogOpen(false);
+      // Reset form
       setNewAsset({
         title: '',
         description: '',
@@ -197,6 +218,8 @@ export default function AdminAssets() {
         isPremium: false,
         imageUrl: '',
       });
+      setAssetFile(null);
+      setThumbnailFile(null);
       toast({
         title: "Asset added",
         description: "The new asset has been successfully added",
