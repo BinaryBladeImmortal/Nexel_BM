@@ -167,6 +167,9 @@ const LearnHub = () => {
   const playerRef = useRef<any>(null);
   const activeTutorial = tutorials.find((t: any) => t.id === activeTutorialId) || null;
 
+  // Get Required Assets popup state
+  const [showAssetsPopup, setShowAssetsPopup] = useState<string | null>(null);
+
   // Load YouTube API
   useEffect(() => {
     // Load YouTube API script
