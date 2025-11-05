@@ -55,7 +55,8 @@ export default function AdminTutorials() {
     xpReward: 50,
     published: false,
     author: '',
-    content: '',
+    assetLink: '',
+    videoUrl: '',
     imageUrl: '',
     estimatedTime: 30,
   });
