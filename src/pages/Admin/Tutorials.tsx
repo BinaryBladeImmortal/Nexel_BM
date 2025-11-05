@@ -1,19 +1,22 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import GlitchText from '@/components/GlitchText';
-import { 
-  BookOpen, 
-  Search, 
-  Edit, 
-  Trash2, 
-  Plus, 
-  Loader2, 
-  Eye, 
+import {
+  BookOpen,
+  Search,
+  Edit,
+  Trash2,
+  Plus,
+  Loader2,
+  Eye,
   EyeOff,
   BarChart,
   BookMarked,
   Sparkles,
-  Zap
+  Zap,
+  Upload,
+  X,
+  File
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
