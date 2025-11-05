@@ -927,21 +927,24 @@ export default function AdminTutorials() {
                 onChange={(e) => setNewTutorial({ ...newTutorial, author: e.target.value })}
               />
             </div>
-            <div className="space-y-2">
-              <Label>Image URL</Label>
-              <Input 
-                value={newTutorial.imageUrl} 
-                onChange={(e) => setNewTutorial({ ...newTutorial, imageUrl: e.target.value })}
-                placeholder="https://example.com/image.jpg"
+            {/* File Upload Sections */}
+            <div className="space-y-4">
+              <TutorialFileUploadComponent
+                file={thumbnailFile}
+                setFile={setThumbnailFile}
+                label="Thumbnail Image"
+                accept="image/*"
+                maxSize="2MB"
+                onFileSelect={validateThumbnailFile}
               />
-            </div>
-            <div className="space-y-2">
-              <Label>Content</Label>
-              <Textarea 
-                value={newTutorial.content} 
-                onChange={(e) => setNewTutorial({ ...newTutorial, content: e.target.value })}
-                rows={6}
-                placeholder="Tutorial content or markdown..."
+
+              <TutorialFileUploadComponent
+                file={contentFile}
+                setFile={setContentFile}
+                label="Content File"
+                accept="application/*,image/*,video/*,text/*"
+                maxSize="10MB"
+                onFileSelect={validateContentFile}
               />
             </div>
             <div className="flex items-center space-x-2 pt-4">
