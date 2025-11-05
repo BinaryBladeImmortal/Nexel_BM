@@ -46,27 +46,31 @@ interface AssetDetailModalProps {
 }
 
 export function AssetDetailModal({ asset, isOpen, onClose }: AssetDetailModalProps) {
-  if (!asset) return null;
-
-  // Hooks must be called at the top level, never inside conditions or try blocks
+  // ALL hooks must be called at the top level, before any conditional logic
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [tiltDeg, setTiltDeg] = useState(0);
 
+  // Memoized calculations using hooks
+  const fileTypeLower = (asset?.fileType || "").toLowerCase();
+  const categoryLower = (asset?.category || "").toLowerCase();
+
+  const isAudio = useMemo(() => {
+    return categoryLower.includes("audio") || /(mp3|wav|ogg|m4a)$/.test(fileTypeLower);
+  }, [categoryLower, fileTypeLower]);
+
+  const isModel3D = useMemo(() => {
+    return categoryLower.includes("3d") || /(fbx|obj|gltf|glb|blend)$/.test(fileTypeLower);
+  }, [categoryLower, fileTypeLower]);
+
+  const isTexture = useMemo(() => {
+    return categoryLower.includes("texture") || /(png|jpg|jpeg|tga|tiff|bmp|webp)$/.test(fileTypeLower);
+  }, [categoryLower, fileTypeLower]);
+
+  if (!asset) return null;
+
   // Add error handling for the component logic
   try {
-
-    const fileTypeLower = (asset.fileType || "").toLowerCase();
-    const categoryLower = (asset.category || "").toLowerCase();
-    const isAudio = useMemo(() => {
-      return categoryLower.includes("audio") || /(mp3|wav|ogg|m4a)$/.test(fileTypeLower);
-    }, [categoryLower, fileTypeLower]);
-    const isModel3D = useMemo(() => {
-      return categoryLower.includes("3d") || /(fbx|obj|gltf|glb|blend)$/.test(fileTypeLower);
-    }, [categoryLower, fileTypeLower]);
-    const isTexture = useMemo(() => {
-      return categoryLower.includes("texture") || /(png|jpg|jpeg|tga|tiff|bmp|webp)$/.test(fileTypeLower);
-    }, [categoryLower, fileTypeLower]);
 
     const handleHoverMove = (e: React.MouseEvent<HTMLDivElement>) => {
       if (!isModel3D) return;
