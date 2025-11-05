@@ -584,6 +584,71 @@ const LearnHub = () => {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Get Required Assets Popup */}
+      {showAssetsPopup && (() => {
+        const tutorial = tutorials.find((t: any) => t.id === showAssetsPopup);
+        return (
+          <Dialog open={!!showAssetsPopup} onOpenChange={(open) => !open && setShowAssetsPopup(null)}>
+            <DialogContent className="sm:max-w-md bg-card border-primary/20">
+              <DialogHeader>
+                <DialogTitle className="text-xl font-orbitron flex items-center gap-2">
+                  <Package className="h-5 w-5 text-primary" />
+                  Get Required Assets
+                </DialogTitle>
+              </DialogHeader>
+
+              <div className="space-y-4">
+                <p className="text-muted-foreground">
+                  This tutorial may require specific assets to follow along. Download the required assets before starting.
+                </p>
+
+                {tutorial?.assetLink ? (
+                  <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="font-semibold text-primary">Required Assets Available</h4>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Click to download assets in a new tab
+                        </p>
+                      </div>
+                      <Button
+                        onClick={() => handleGetAssets(showAssetsPopup)}
+                        className="bg-gradient-primary hover:glow-primary"
+                      >
+                        <ExternalLink className="h-4 w-4 mr-2" />
+                        Get Assets
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="bg-muted/20 border border-muted/30 rounded-lg p-4">
+                      <p className="text-center text-muted-foreground">
+                        No specific assets required for this tutorial
+                      </p>
+                    </div>
+                  )}
+
+                <div className="flex gap-3 pt-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => handleStartWithoutAssets(showAssetsPopup)}
+                    className="flex-1"
+                  >
+                    Start Anyway
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => setShowAssetsPopup(null)}
+                    className="flex-1"
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+        );
+      })()}
     </div>
   );
 };
