@@ -268,7 +268,13 @@ export default function AdminAssets() {
 
   const handleUpdateAsset = (e: React.FormEvent) => {
     e.preventDefault();
-    updateAssetMutation.mutate(selectedAsset);
+    updateAssetMutation.mutate({
+      asset: selectedAsset,
+      files: {
+        assetFile: editAssetFile || undefined,
+        thumbnailFile: editThumbnailFile || undefined
+      }
+    });
   };
 
   const handleAddAsset = (e: React.FormEvent) => {
