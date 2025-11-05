@@ -241,7 +241,13 @@ export default function AdminTutorials() {
 
   const handleUpdateTutorial = (e: React.FormEvent) => {
     e.preventDefault();
-    updateTutorialMutation.mutate(selectedTutorial);
+    updateTutorialMutation.mutate({
+      tutorial: selectedTutorial,
+      files: {
+        thumbnailFile: editThumbnailFile || undefined,
+        contentFile: editContentFile || undefined
+      }
+    });
   };
 
   const handleAddTutorial = (e: React.FormEvent) => {
