@@ -2,6 +2,16 @@ import { useQuery } from "@tanstack/react-query";
 import ApiService from "@/services/api";
 import { Link } from "react-router-dom";
 
+interface ShowcaseGame {
+  _id?: string;
+  title: string;
+  thumbnail: string;
+  author: string;
+  description?: string;
+  gameUrl?: string;
+  likes?: number;
+}
+
 export default function HomeShowcase() {
   const { data, isLoading, error } = useQuery({
     queryKey: ['home-showcases'],
@@ -10,7 +20,7 @@ export default function HomeShowcase() {
     refetchOnWindowFocus: false,
   });
 
-  const items: any[] = (data?.games || []).slice(0, 3);
+  const items: ShowcaseGame[] = (data?.games || []).slice(0, 3);
 
   if (isLoading) {
     return (
