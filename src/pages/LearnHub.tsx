@@ -232,7 +232,8 @@ const LearnHub = () => {
       });
       return;
     }
-    setActiveTutorialId(id);
+    // Show the "Get Required Assets" popup first
+    setShowAssetsPopup(id);
   };
 
   const awardAndPersist = (updated: ProgressData) => {
