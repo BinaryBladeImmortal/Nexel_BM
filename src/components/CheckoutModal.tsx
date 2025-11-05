@@ -94,14 +94,15 @@ export const CheckoutModal = ({ isOpen, onClose, plan }: CheckoutModalProps) => 
 
     // Calculate dates
     const startDate = new Date();
-    let endDate = new Date();
-    
+    const baseEndDate = new Date();
+
     // Calculate end date based on plan duration
     const months = parseInt(plan.duration);
+    const endDate = new Date(baseEndDate);
     if (!isNaN(months)) {
-      endDate.setMonth(endDate.getMonth() + months);
+      endDate.setMonth(baseEndDate.getMonth() + months);
     } else {
-      endDate.setFullYear(endDate.getFullYear() + 1);
+      endDate.setFullYear(baseEndDate.getFullYear() + 1);
     }
 
     // Save subscription to backend
