@@ -1,4 +1,4 @@
-import { Play, Award, Lock, CheckCircle, Star } from "lucide-react";
+import { Play, Award, Lock, CheckCircle, Star, Package, ExternalLink } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import ApiService from "@/services/api";
