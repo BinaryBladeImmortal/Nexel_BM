@@ -885,9 +885,13 @@ export default function AdminAssets() {
                   onChange={(e) => setNewAsset({ ...newAsset, category: e.target.value })}
                 >
                   <option value="model">3D Model</option>
+                  <option value="animation">Animation</option>
                   <option value="texture">Texture</option>
                   <option value="script">Script</option>
                   <option value="audio">Audio</option>
+                  <option value="video">Video</option>
+                  <option value="vfx">Visual Effects</option>
+                  <option value="font">Font</option>
                   <option value="other">Other</option>
                 </select>
               </div>
