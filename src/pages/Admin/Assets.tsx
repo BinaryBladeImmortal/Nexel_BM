@@ -36,6 +36,17 @@ export default function AdminAssets() {
   const [selectedAsset, setSelectedAsset] = useState<any>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+
+  // File upload state
+  const [assetFile, setAssetFile] = useState<File | null>(null);
+  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
+
+  // Edit dialog file state
+  const [editAssetFile, setEditAssetFile] = useState<File | null>(null);
+  const [editThumbnailFile, setEditThumbnailFile] = useState<File | null>(null);
+
   const [newAsset, setNewAsset] = useState({
     title: '',
     description: '',
